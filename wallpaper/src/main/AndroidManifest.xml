@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature
+        android:name="android.software.live_wallpaper"
+        android:required="true" />
+
+    <application>
+
+        <!-- Ask Play services to pre-download the segmentation model at install time -->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="subject_segment" />
+
+        <!-- directBootAware: lets the wallpaper render before first unlock after a reboot
+             (assets are kept in device-protected storage, see DepthStore) -->
+        <service
+            android:name=".DepthWallpaperService"
+            android:exported="true"
+            android:directBootAware="true"
+            android:label="@string/depth_wallpaper_label"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/depth_wallpaper" />
+        </service>
+
+        <!-- MAIN/LAUNCHER filter is for standalone testing only; remove once your
+             main app opens SetupActivity itself. -->
+        <activity
+            android:name=".SetupActivity"
+            android:exported="true"
+            android:label="@string/depth_wallpaper_label">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="depth_wallpaper_label">Depth Clock</string>
+    <string name="depth_wallpaper_desc">Clock that sits behind the subject of your photo</string>
+</resources>
